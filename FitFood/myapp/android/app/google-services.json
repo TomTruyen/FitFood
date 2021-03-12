@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1038877978924",
+    "firebase_url": "https://fitfood-d37c1.firebaseio.com",
+    "project_id": "fitfood-d37c1",
+    "storage_bucket": "fitfood-d37c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038877978924:android:a8efa6913daed21e017c89",
+        "android_client_info": {
+          "package_name": "com.tomtruyen.fitfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038877978924-bjbesclgv4deehfmr1fajacdqde97gbh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tomtruyen.fitfood",
+            "certificate_hash": "d86812660248d3f21fde29728f8d608a5987e5a3"
+          }
+        },
+        {
+          "client_id": "1038877978924-9ss08cark41blrmmihigbis5fonopf1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg49GY4Gwah6PSckhLGcNLbMkWDGAm04A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038877978924-9ss08cark41blrmmihigbis5fonopf1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
