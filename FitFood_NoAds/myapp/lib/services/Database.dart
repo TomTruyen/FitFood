@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 class SqlDatabase {
   Database db;
   List<Nutrition> nutrition = [];
-  Nutrition todayNutrition;
+  Nutrition todayNutrition = new Nutrition();
 
   Future<String> getPersistentDBPath() async {
     try {

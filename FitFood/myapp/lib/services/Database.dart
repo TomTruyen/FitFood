@@ -5,12 +5,11 @@ import 'package:myapp/models/Nutrition.dart';
 import 'package:myapp/services/Converters.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
-// import 'package:myapp/database_service.dart';
 
 class SqlDatabase {
   Database db;
   List<Nutrition> nutrition = [];
-  Nutrition todayNutrition;
+  Nutrition todayNutrition = new Nutrition();
 
   Future<String> getPersistentDBPath() async {
     try {

@@ -10,8 +10,15 @@ class Nutrition {
     this.carbs = 0,
     this.protein = 0,
     this.fat = 0,
-    this.time = '',
-  });
+    this.time,
+  }) {
+    if (this.time == null) {
+      DateTime now = DateTime.now();
+      String today =
+          "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}";
+      this.time = today;
+    }
+  }
 
   Map<String, dynamic> toJson() {
     if (this.time.length < 10) {

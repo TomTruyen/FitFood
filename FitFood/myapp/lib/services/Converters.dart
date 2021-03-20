@@ -22,11 +22,7 @@ List<Nutrition> convertToNutritionList(List<Map> nutrition) {
 
 Nutrition convertToNutrition(List<Map> nutrition) {
   if (nutrition == null || nutrition.length == 0) {
-    DateTime now = DateTime.now();
-    String today =
-        "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}";
-
-    return Nutrition(time: today);
+    return Nutrition();
   }
 
   String date = nutrition[0]['date'];
