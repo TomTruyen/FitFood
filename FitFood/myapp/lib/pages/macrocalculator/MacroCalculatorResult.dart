@@ -19,10 +19,8 @@ class MacroCalculatorResult extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: unitHeightValue * 56.0,
         title: Text(
           'Nutrition Results',
-          style: TextStyle(fontSize: unitHeightValue * 20.0),
         ),
       ),
       body: Container(

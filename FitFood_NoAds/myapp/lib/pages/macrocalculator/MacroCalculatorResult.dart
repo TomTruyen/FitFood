@@ -19,15 +19,10 @@ class MacroCalculatorResult extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: unitHeightValue * 56.0,
         title: Text(
           'Nutrition Results',
-          style: TextStyle(fontSize: unitHeightValue * 20.0),
         ),
       ),
-
-      /*Make macro + kcal adder here with input fields for every thing*/
-      /* Add the data with button to database and then let button get us back to KcalTracker*/
       body: Container(
         child: Column(
           children: <Widget>[

@@ -37,15 +37,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        toolbarHeight: unitHeightValue * 56,
         title: Text(
           titles[selectedIndex],
-          style: TextStyle(fontSize: unitHeightValue * 20),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.menu,
-            size: unitHeightValue * 26.0,
           ),
           onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
@@ -58,7 +55,6 @@ class _HomePageState extends State<HomePage> {
             Container(
               height: 64.0,
               child: DrawerHeader(
-                padding: EdgeInsets.all(12),
                 child: Text(
                   'FitFood',
                   style: TextStyle(
@@ -72,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text(
                 titles[0],
-                style: TextStyle(fontSize: unitHeightValue * 16.0),
+                style: TextStyle(fontSize: unitHeightValue * 20.0),
               ),
               onTap: () {
                 setState(() {
@@ -85,7 +81,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text(
                 titles[1],
-                style: TextStyle(fontSize: unitHeightValue * 16.0),
+                style: TextStyle(fontSize: unitHeightValue * 20.0),
               ),
               onTap: () {
                 setState(() {

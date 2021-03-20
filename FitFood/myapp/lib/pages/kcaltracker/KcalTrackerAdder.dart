@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/models/Nutrition.dart';
-import 'package:myapp/services/Database.dart';
 import 'package:myapp/shared/Functions.dart';
 import 'package:myapp/shared/Globals.dart' as globals;
 import 'package:myapp/shared/Loading.dart';
@@ -23,10 +22,8 @@ class KcalTrackerAdder extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: unitHeightValue * 56.0,
         title: Text(
           'Nutrition Adder',
-          style: TextStyle(fontSize: unitHeightValue * 20.0),
         ),
       ),
       body: MyStateWidget(
@@ -463,13 +460,11 @@ class KcalTrackerBody extends State<MyStateWidget> {
                 carbs: carbs,
                 protein: protein,
                 fat: fat,
-                time: globals.todayNutrition.time,
+                time: globals.sqlDatabase.todayNutrition.time,
               );
 
               // ADD NUTRITION TO DATABASE
-              bool isSaved = await addNutrition(
-                nutrition,
-              );
+              bool isSaved = await globals.sqlDatabase.addNutrition(nutrition);
 
               bool isRefreshed = await widget.refreshNutrition();
 

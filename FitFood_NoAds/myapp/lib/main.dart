@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/pages/Home.dart';
 import 'package:myapp/services/Database.dart';
-import 'package:myapp/shared/Loading.dart';
 import 'package:myapp/shared/Globals.dart' as globals;
+import 'package:myapp/shared/Loading.dart';
 
 bool adLoaded = false;
 
@@ -28,9 +28,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      globals.db = await setupDatabase();
-      globals.nutrition = await getNutrition();
-      globals.todayNutrition = await getTodayNutrition();
+      globals.sqlDatabase = new SqlDatabase();
+      await globals.sqlDatabase.setupDatabase();
+      await Future.wait([
+        globals.sqlDatabase.getNutrition(),
+        globals.sqlDatabase.getTodayNutrition(),
+      ]);
     });
 
     Random random = new Random();

@@ -32,9 +32,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      globals.db = await setupDatabase();
-      globals.nutrition = await getNutrition();
-      globals.todayNutrition = await getTodayNutrition();
+      globals.sqlDatabase = new SqlDatabase();
+      await globals.sqlDatabase.setupDatabase();
+      await Future.wait([
+        globals.sqlDatabase.getNutrition(),
+        globals.sqlDatabase.getTodayNutrition(),
+      ]);
     });
 
     Random random = new Random();

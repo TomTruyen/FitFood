@@ -1,49 +1,47 @@
-import 'package:flutter/cupertino.dart';
-import 'package:myapp/services/Database.dart';
 import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myapp/models/Nutrition.dart';
 import 'package:myapp/pages/kcaltracker/KcalTrackerAdder.dart';
 import 'package:myapp/pages/kcaltracker/KcalTrackerHistoryDetail.dart';
-import 'package:myapp/models/Nutrition.dart';
 import 'package:myapp/shared/Globals.dart' as globals;
 
 class KcalTracker extends StatelessWidget {
-  final bool adLoaded;
-
-  KcalTracker({this.adLoaded = false});
-
   @override
   Widget build(BuildContext context) {
-    return KcalTrackerState(
-      adLoaded: adLoaded,
-    );
+    return KcalTrackerState();
   }
 }
 
 class KcalTrackerState extends StatefulWidget {
-  final bool adLoaded;
-
-  KcalTrackerState({this.adLoaded = false, Key key}) : super(key: key);
-
   @override
   KcalTrackerCode createState() => KcalTrackerCode();
 }
 
 class KcalTrackerCode extends State<KcalTrackerState> {
+  List<Nutrition> nutrition = [];
+  Nutrition todayNutrition;
+
   @override
   void initState() {
     super.initState();
+
+    setState(() {
+      nutrition = globals.sqlDatabase.nutrition;
+      todayNutrition = globals.sqlDatabase.todayNutrition;
+    });
   }
 
   Future<bool> refreshNutrition() async {
-    globals.nutrition = await getNutrition();
-    globals.todayNutrition = await getTodayNutrition();
+    await globals.sqlDatabase.refreshNutrition();
 
-    await Future.delayed(Duration(seconds: 1), () {
-      setState(() {});
+    setState(() {
+      nutrition = globals.sqlDatabase.nutrition;
+      todayNutrition = globals.sqlDatabase.todayNutrition;
     });
 
     return true;
@@ -51,9 +49,6 @@ class KcalTrackerCode extends State<KcalTrackerState> {
 
   @override
   Widget build(BuildContext context) {
-    List<Nutrition> nutrition = globals.nutrition ?? [];
-    Nutrition todayNutrition = globals.todayNutrition ?? Nutrition();
-
     double unitHeightValue = MediaQuery.of(context).size.height * 0.001;
 
     return Scaffold(
@@ -67,7 +62,6 @@ class KcalTrackerCode extends State<KcalTrackerState> {
           slivers: [
             SliverFillRemaining(
               child: Container(
-                padding: widget.adLoaded ? EdgeInsets.only(bottom: 56.0) : null,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[

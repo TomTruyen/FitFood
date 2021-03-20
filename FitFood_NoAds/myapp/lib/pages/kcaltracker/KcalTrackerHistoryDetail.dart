@@ -4,8 +4,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myapp/models/Nutrition.dart';
-import 'package:myapp/services/Database.dart';
 import 'package:myapp/shared/Functions.dart';
+import 'package:myapp/shared/Globals.dart' as globals;
 import 'package:myapp/shared/Loading.dart';
 
 class KcalTrackerHistoryDetail extends StatelessWidget {
@@ -92,6 +92,7 @@ class KcalTrackerHistoryDetail extends StatelessWidget {
                                       "Cancel",
                                       style: TextStyle(
                                         fontSize: unitHeightValue * 16.0,
+                                        color: Colors.white,
                                       ),
                                     ),
                                     onPressed: () {
@@ -103,6 +104,7 @@ class KcalTrackerHistoryDetail extends StatelessWidget {
                                       'Delete',
                                       style: TextStyle(
                                         fontSize: unitHeightValue * 16.0,
+                                        color: Colors.white,
                                       ),
                                     ),
                                     onPressed: () async {
@@ -111,7 +113,8 @@ class KcalTrackerHistoryDetail extends StatelessWidget {
                                       });
 
                                       // REMOVE NUTRITION VALUE
-                                      bool isDeleted = await deleteNutrition(
+                                      bool isDeleted = await globals.sqlDatabase
+                                          .deleteNutrition(
                                         nutrition.time,
                                       );
 
@@ -139,14 +142,12 @@ class KcalTrackerHistoryDetail extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: unitHeightValue * 56.0,
         title: Text(
           'Nutrition History',
-          style: TextStyle(fontSize: unitHeightValue * 20.0),
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.delete, size: unitHeightValue * 26.0),
+            icon: Icon(Icons.delete),
             onPressed: () {
               _showDialog();
             },
