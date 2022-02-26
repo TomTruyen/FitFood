@@ -61,9 +61,20 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-          primaryColor: Color(0xFF0A0E21),
-          scaffoldBackgroundColor: Color(0xFF0A0E21),
-          textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white))),
+        primaryColor: Color(0xFF0A0E21),
+        scaffoldBackgroundColor: Color(0xFF0A0E21),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF0A0E21),
+          elevation: 0,
+        ),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(color: Colors.white),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Color(0xFFEB1555),
+          selectionHandleColor: Color(0xFFEB1555),
+        ),
+      ),
       home: FutureBuilder(
         future: isLoaded,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
