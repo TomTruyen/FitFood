@@ -5,7 +5,7 @@ import 'package:myapp/shared/Functions.dart';
 import 'package:myapp/shared/Globals.dart' as globals;
 import 'package:myapp/shared/Loading.dart';
 
-class KcalTrackerAdder extends StatelessWidget {
+class KcalTrackerAdder extends StatefulWidget {
   final List<Nutrition> nutrition;
   final Nutrition todayNutrition;
   final Function refreshNutrition;
@@ -17,38 +17,10 @@ class KcalTrackerAdder extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Nutrition Adder',
-        ),
-      ),
-      body: MyStateWidget(
-        nutrition: nutrition,
-        todayNutrition: todayNutrition,
-        refreshNutrition: refreshNutrition,
-      ),
-    );
-  }
-}
-
-class MyStateWidget extends StatefulWidget {
-  final List<Nutrition> nutrition;
-  final Nutrition todayNutrition;
-  final Function refreshNutrition;
-
-  MyStateWidget({
-    this.nutrition,
-    this.todayNutrition,
-    this.refreshNutrition,
-  });
-
-  @override
   KcalTrackerBody createState() => KcalTrackerBody();
 }
 
-class KcalTrackerBody extends State<MyStateWidget> {
+class KcalTrackerBody extends State<KcalTrackerAdder> {
   final kcalController = TextEditingController();
   final carbsController = TextEditingController();
   final proteinController = TextEditingController();
@@ -114,126 +86,125 @@ class KcalTrackerBody extends State<MyStateWidget> {
       );
     }
 
-    return SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Nutrition Adder',
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: AddNutritionCard(
-                text: 'CALORIES',
-                value: kcal,
-                maxValue: 2500,
-                controller: kcalController,
-                textHeightUnit: unitHeightValue,
-                onChanged: (String value) {
-                  setState(() {
-                    kcalController.value = kcalController.value.copyWith(
-                      text: value,
-                      selection: TextSelection.fromPosition(
-                        TextPosition(offset: value.length),
-                      ),
-                    );
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: AddNutritionCard(
-                text: 'CARBS',
-                value: carbs,
-                maxValue: 200,
-                controller: carbsController,
-                textHeightUnit: unitHeightValue,
-                onChanged: (String value) {
-                  setState(() {
-                    carbsController.value = carbsController.value.copyWith(
-                      text: value,
-                      selection: TextSelection.fromPosition(
-                        TextPosition(offset: value.length),
-                      ),
-                    );
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: AddNutritionCard(
-                text: 'PROTEIN',
-                value: protein,
-                maxValue: 100,
-                controller: proteinController,
-                textHeightUnit: unitHeightValue,
-                onChanged: (String value) {
-                  setState(() {
-                    proteinController.value = proteinController.value.copyWith(
-                      text: value,
-                      selection: TextSelection.fromPosition(
-                        TextPosition(offset: value.length),
-                      ),
-                    );
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: AddNutritionCard(
-                text: 'FAT',
-                value: fat,
-                maxValue: 100,
-                controller: fatController,
-                textHeightUnit: unitHeightValue,
-                onChanged: (String value) {
-                  setState(() {
-                    fatController.value = fatController.value.copyWith(
-                      text: value,
-                      selection: TextSelection.fromPosition(
-                        TextPosition(offset: value.length),
-                      ),
-                    );
-                  });
-                },
-              ),
-            ),
-            GestureDetector(
-              onTap: () async {
-                _showSaveDialog();
+        actions: [
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: () async {
+              _showSaveDialog();
 
-                Nutrition nutrition = Nutrition(
-                  kcal: kcal,
-                  carbs: carbs,
-                  protein: protein,
-                  fat: fat,
-                  time: globals.sqlDatabase.todayNutrition.time,
-                );
+              Nutrition nutrition = Nutrition(
+                kcal: kcal,
+                carbs: carbs,
+                protein: protein,
+                fat: fat,
+                time: globals.sqlDatabase.todayNutrition.time,
+              );
 
-                // ADD NUTRITION TO DATABASE
-                bool isSaved =
-                    await globals.sqlDatabase.addNutrition(nutrition);
+              // ADD NUTRITION TO DATABASE
+              bool isSaved = await globals.sqlDatabase.addNutrition(nutrition);
 
-                bool isRefreshed = await widget.refreshNutrition();
+              bool isRefreshed = await widget.refreshNutrition();
 
-                if (isSaved && isRefreshed) {
-                  tryPopContext(context);
-                  tryPopContext(context);
-                }
-              },
-              child: Container(
-                child: Center(
-                  child: Text('CONFIRM',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: unitHeightValue * 25.0)),
+              if (isSaved && isRefreshed) {
+                tryPopContext(context);
+                tryPopContext(context);
+              }
+            },
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: AddNutritionCard(
+                  text: 'CALORIES',
+                  value: kcal,
+                  maxValue: 2500,
+                  controller: kcalController,
+                  textHeightUnit: unitHeightValue,
+                  onChanged: (String value) {
+                    setState(() {
+                      kcalController.value = kcalController.value.copyWith(
+                        text: value,
+                        selection: TextSelection.fromPosition(
+                          TextPosition(offset: value.length),
+                        ),
+                      );
+                    });
+                  },
                 ),
-                height: 80.0,
-                margin: EdgeInsets.only(top: 10.0),
-                color: Color(0xFFEB1555),
               ),
-            ),
-          ],
+              Expanded(
+                child: AddNutritionCard(
+                  text: 'CARBS',
+                  value: carbs,
+                  maxValue: 200,
+                  controller: carbsController,
+                  textHeightUnit: unitHeightValue,
+                  onChanged: (String value) {
+                    setState(() {
+                      carbsController.value = carbsController.value.copyWith(
+                        text: value,
+                        selection: TextSelection.fromPosition(
+                          TextPosition(offset: value.length),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: AddNutritionCard(
+                  text: 'PROTEIN',
+                  value: protein,
+                  maxValue: 100,
+                  controller: proteinController,
+                  textHeightUnit: unitHeightValue,
+                  onChanged: (String value) {
+                    setState(() {
+                      proteinController.value =
+                          proteinController.value.copyWith(
+                        text: value,
+                        selection: TextSelection.fromPosition(
+                          TextPosition(offset: value.length),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: AddNutritionCard(
+                  text: 'FAT',
+                  value: fat,
+                  maxValue: 100,
+                  controller: fatController,
+                  textHeightUnit: unitHeightValue,
+                  onChanged: (String value) {
+                    setState(() {
+                      fatController.value = fatController.value.copyWith(
+                        text: value,
+                        selection: TextSelection.fromPosition(
+                          TextPosition(offset: value.length),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

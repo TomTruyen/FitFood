@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myapp/models/Nutrition.dart';
+import 'package:myapp/pages/kcaltracker/KcalTrackerHistoryEdit.dart';
 import 'package:myapp/shared/Functions.dart';
 import 'package:myapp/shared/Globals.dart' as globals;
 import 'package:myapp/shared/Loading.dart';
@@ -146,6 +148,19 @@ class KcalTrackerHistoryDetail extends StatelessWidget {
           'Nutrition History',
         ),
         actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.of(context).push(
+                  CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (BuildContext context) => KcalTrackerHistoryEdit(
+                      nutrition: nutrition,
+                      refresh: refreshNutrition,
+                    ),
+                  ),
+                );
+              }),
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {

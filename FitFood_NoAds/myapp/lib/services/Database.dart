@@ -86,6 +86,28 @@ class SqlDatabase {
     }
   }
 
+  Future<bool> overrideNutrition(Nutrition nutrition) async {
+    try {
+      await db.rawUpdate(
+        'UPDATE nutrition SET kcal = ?, carbs = ?, protein = ?, fat = ? WHERE date = ?',
+        [
+          nutrition.kcal,
+          nutrition.carbs,
+          nutrition.protein,
+          nutrition.fat,
+          nutrition.time
+        ],
+      );
+
+      await getNutrition();
+      await getTodayNutrition();
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> addNutrition(Nutrition _nutrition) async {
     try {
       Nutrition foundNutrition;
